@@ -17,7 +17,7 @@ router.get('/google/callback',
        
         const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
         
-        res.redirect(`http://localhost:5173/login-success?token=${token}&name=${req.user.name}&email=${req.user.email}&id=${req.user._id}`);
+        res.redirect(`https://infina-tech.vercel.app/login-success?token=${token}&name=${req.user.name}&email=${req.user.email}&id=${req.user._id}`);
     }
 );
 
