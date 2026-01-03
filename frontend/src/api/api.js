@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const BASE_URL = 'https://tech-k27j.onrender.com';
+const BASE_URL = 'https://tech-k27j.onrender.com/api';
 
 
 const API = axios.create({

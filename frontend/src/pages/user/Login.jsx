@@ -167,7 +167,7 @@ const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = 'https://tech-k27j.onrender.com/user/google';
+        window.location.href = 'https://tech-k27j.onrender.com/api/user/google';
     };
 
     const handleForgotPassword = () => {
