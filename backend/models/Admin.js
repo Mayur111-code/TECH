@@ -7,7 +7,6 @@ const AdminSchema = new mongoose.Schema({
     password: { type: String, required: true, select: false },
 }, { timestamps: true });
 
-// Password Match Method
 AdminSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };

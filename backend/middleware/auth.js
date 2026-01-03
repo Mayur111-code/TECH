@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Admin = require('../models/Admin');
 
-// User sathi guard
 exports.userProtect = async (req, res, next) => {
     let token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ message: "User token missing" });
@@ -16,7 +15,6 @@ exports.userProtect = async (req, res, next) => {
     }
 };
 
-// Admin sathi guard
 exports.adminProtect = async (req, res, next) => {
     let token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ message: "Admin token missing" });

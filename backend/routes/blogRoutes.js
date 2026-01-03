@@ -8,17 +8,17 @@ const {
     deleteBlog 
 } = require('../controllers/blogController');
 
-// 🛡️ Navin Middleware Import
+
 const { adminProtect } = require('../middleware/auth');
 const upload = require('../middleware/upload'); 
 
 router.route('/')
-    .get(getBlogs) // Sab dekh sakte hain (Public)
-    .post(adminProtect, upload.single('image'), createBlog); // Fakt Admin + Image
+    .get(getBlogs) 
+    .post(adminProtect, upload.single('image'), createBlog); 
 
 router.route('/:id')
-    .get(getBlog) // Single blog details (Public)
-    .put(adminProtect, upload.single('image'), updateBlog) // Edit blog
-    .delete(adminProtect, deleteBlog); // Delete blog
+    .get(getBlog) 
+    .put(adminProtect, upload.single('image'), updateBlog) 
+    .delete(adminProtect, deleteBlog); 
 
 module.exports = router;

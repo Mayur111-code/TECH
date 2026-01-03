@@ -4,7 +4,7 @@ const BlogSchema = new mongoose.Schema({
     title: { type: String, required: true, trim: true },
     content: { type: String, required: true },
     author: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
-    image: { type: String, default: 'no-photo.jpg' }, // Cloudinary URL yahan aayega
+    image: { type: String, default: 'no-photo.jpg' }, 
     category: { type: String, enum: ['Tech', 'Business', 'Design'], default: 'Tech' },
     createdAt: { type: Date, default: Date.now }
 });

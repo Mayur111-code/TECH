@@ -5,6 +5,10 @@ import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { Plus, Trash2, Edit, X, Image as ImageIcon } from 'lucide-react';
 
+
+
+import API from '../../api/api';
+
 const ManageBlogs = () => {
     const [blogs, setBlogs] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -16,8 +20,15 @@ const ManageBlogs = () => {
     // 1. Fetch Blogs from Backend
     const fetchBlogs = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/api/blogs');
-            setBlogs(data.data);
+            // const { data } = await axios.get('http://localhost:5000/api/blogs');
+            // setBlogs(data.data);
+
+            const { data } = await API.get('/blogs');
+             setBlogs(data.data);
+
+
+
+
         } catch (err) {
             toast.error("Failed to load blogs");
         }
@@ -25,12 +36,11 @@ const ManageBlogs = () => {
 
     useEffect(() => { fetchBlogs(); }, []);
 
-    // 2. Handle Form Submission (Create & Update)
     const handleSubmit = async (e) => {
         e.preventDefault();
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
         
-        // 🚀 FormData wapraycha (Image file pathvnya sathi)
+      
         const data = new FormData();
         data.append('title', formData.title);
         data.append('category', formData.category);
@@ -46,10 +56,10 @@ const ManageBlogs = () => {
 
         try {
             if (editId) {
-                await axios.put(`http://localhost:5000/api/blogs/${editId}`, data, config);
+                await API.put(`/blogs/${editId}`, data, config);
                 toast.success("Blog Updated!");
             } else {
-                await axios.post('http://localhost:5000/api/blogs', data, config);
+                await API.post('/blogs', data, config);
                 toast.success("Blog Published!");
             }
             resetForm();
@@ -70,7 +80,7 @@ const ManageBlogs = () => {
     const deleteBlog = async (id) => {
         if (!window.confirm("Delete this blog?")) return;
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-        await axios.delete(`http://localhost:5000/api/blogs/${id}`, {
+        await API.delete(`/blogs/${id}`, {
             headers: { Authorization: `Bearer ${adminInfo.token}` }
         });
         toast.success("Blog Removed");

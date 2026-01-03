@@ -1,15 +1,13 @@
 const Blog = require('../models/Blog');
 
-// @desc    Create new blog
+
 exports.createBlog = async (req, res) => {
     try {
         if (req.file) {
             req.body.image = req.file.path; 
         }
         
-        // 🚨 CRITICAL CHANGE: 
-        // Apan Admin separate kela aahe, mhanun 'req.user' chya jagi 'req.admin' vapra
-        // Ani 'authorModel' Blog schema madhe 'Admin' asava lagel jar fakt admin blog lihinar asel tar.
+        
         req.body.author = req.admin.id; 
 
         const blog = await Blog.create(req.body);
@@ -19,10 +17,9 @@ exports.createBlog = async (req, res) => {
     }
 };
 
-// @desc    Get all blogs (He barobar aahe)
 exports.getBlogs = async (req, res) => {
     try {
-        // 'author' populate kartaana check kara ki Blog model madhe 'ref' konta aahe (User ki Admin?)
+       
         const blogs = await Blog.find().populate('author', 'name email').sort('-createdAt');
         res.status(200).json({ success: true, count: blogs.length, data: blogs });
     } catch (error) {
@@ -30,7 +27,6 @@ exports.getBlogs = async (req, res) => {
     }
 };
 
-// @desc    Get single blog
 exports.getBlog = async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id).populate('author', 'name email');
@@ -41,7 +37,6 @@ exports.getBlog = async (req, res) => {
     }
 };
 
-// @desc    Update blog
 exports.updateBlog = async (req, res) => {
     try {
         let blog = await Blog.findById(req.params.id);
@@ -62,7 +57,6 @@ exports.updateBlog = async (req, res) => {
     }
 };
 
-// @desc    Delete blog
 exports.deleteBlog = async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);

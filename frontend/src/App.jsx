@@ -18,11 +18,12 @@ import Login from './pages/user/Login';
 import Register from './pages/user/Register';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
-import Blogs from './pages/user/Blogs';
+import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
 import LoginSuccess from './pages/user/LoginSuccess';
 import ManageProjects from './pages/admin/ManageProjects';
 import ManageBlogs from './pages/admin/ManageBlogs';
+import Footer from './components/layout/Footer';
 
 // 💡 Error yenar nahi mhanun temporary empty components (Jar banvle nastil tar)
 //const ManageProjects = () => <div className="p-10 font-bold">Manage Projects Coming Soon...</div>;
@@ -44,6 +45,8 @@ const LayoutHandler = ({ children }) => {
 
             <main className={!isAdminPath ? "pt-16 flex-1" : "flex-1"}>
                 {children}
+
+                {!isAdminPath && <Footer />}
             </main>
         </div>
     );

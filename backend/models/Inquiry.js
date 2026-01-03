@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const InquirySchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User', // User model se link karenge
+        ref: 'User', 
         required: true
     },
     subject: {

@@ -3,16 +3,18 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { Plus, Trash2, Edit, Save, X, Search } from 'lucide-react';
 
+
+import API from '../../api/api'
+
 const ManageServices = () => {
     const [services, setServices] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editId, setEditId] = useState(null);
     
-    // 1. icon field add keli aahe 🚀
     const [formData, setFormData] = useState({ title: '', description: '', icon: '' });
 
     const fetchServices = async () => {
-        const { data } = await axios.get('http://localhost:5000/api/services');
+        const { data } = await API.get('/services');
         setServices(data.data);
     };
 
@@ -25,10 +27,10 @@ const ManageServices = () => {
 
         try {
             if (editId) {
-                await axios.put(`http://localhost:5000/api/services/${editId}`, formData, config);
+                await API.put(`/services/${editId}`, formData, config);
                 toast.success("Service Updated!");
             } else {
-                await axios.post('http://localhost:5000/api/services', formData, config);
+                await API.post('/services', formData, config);
                 toast.success("Service Added!");
             }
             setFormData({ title: '', description: '', icon: '' });
@@ -43,7 +45,7 @@ const ManageServices = () => {
     const deleteService = async (id) => {
         if (!window.confirm("Sure?")) return;
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-        await axios.delete(`http://localhost:5000/api/services/${id}`, {
+        await API.delete(`/services/${id}`, {
             headers: { Authorization: `Bearer ${adminInfo.token}` }
         });
         toast.success("Deleted!");

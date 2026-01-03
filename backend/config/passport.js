@@ -7,8 +7,8 @@ module.exports = function (passport) {
             {
                 clientID: process.env.GOOGLE_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-                // passport.js madhe
-callbackURL: 'http://localhost:5000/api/user/google/callback', // Purna URL taka 
+               
+callbackURL: 'http://localhost:5000/api/user/google/callback', 
             },
             async (accessToken, refreshToken, profile, done) => {
                 const newUser = {
@@ -40,7 +40,6 @@ callbackURL: 'http://localhost:5000/api/user/google/callback', // Purna URL taka
 
     passport.serializeUser((user, done) => done(null, user.id));
     
-    // 👈 Modern Async/Await version
     passport.deserializeUser(async (id, done) => {
         try {
             const user = await User.findById(id);

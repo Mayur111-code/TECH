@@ -10,18 +10,18 @@ const ProjectSchema = new mongoose.Schema({
         required: true 
     },
     techStack: { 
-        type: [String], // Array: ['React', 'Node', 'MongoDB']
+        type: [String], 
         required: true 
     },
     image: { 
-        type: String, // Cloudinary URL
+        type: String, 
         required: true 
     },
     projectLink: { 
         type: String 
     },
     category: { 
-        type: String, // e.g., Web App, Mobile App, UI/UX
+        type: String, 
         required: true 
     },
     createdAt: { 

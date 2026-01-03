@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: 'infina_projects', // Cloudinary var ya naavacha folder banel
+        folder: 'infina_projects', 
         allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
     }
 });

@@ -21,14 +21,16 @@ const LoginSuccess = () => {
                 user: { id, name, email }
             };
 
-            // 💾 Storage madhe taka
+        
             localStorage.setItem('userInfo', JSON.stringify(userData));
             
-            // 🔑 Context update kara
+            
             setUser(userData);
             
             toast.success(`Welcome ${name}!`);
-            navigate('/'); // Home la pathva
+
+           
+            window.location.href = "/"; 
         } else {
             toast.error('Google Login Failed');
             navigate('/login');
@@ -36,8 +38,11 @@ const LoginSuccess = () => {
     }, [searchParams, navigate, setUser]);
 
     return (
-        <div className="h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="h-screen flex items-center justify-center bg-slate-50">
+            <div className="text-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 border-solid mx-auto mb-4"></div>
+                <p className="text-slate-600 font-bold animate-pulse">Syncing your profile...</p>
+            </div>
         </div>
     );
 };

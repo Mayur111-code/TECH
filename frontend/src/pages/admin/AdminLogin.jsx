@@ -1,36 +1,44 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom'; // 👈 1. Import navigate
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext'; // 👈 2. Import context
+import { useAuth } from '../../context/AuthContext'; 
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
+
+
+import API from '../../api/api';
+
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const navigate = useNavigate(); // 👈 3. Initialize navigate
-  const { setAdmin } = useAuth(); // 👈 4. State update sathi
+  const navigate = useNavigate(); 
+  const { setAdmin } = useAuth(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     
     try {
-        // 🚀 5. Admin Login API Call
-        const { data } = await axios.post('http://localhost:5000/api/admin/login', { email, password });
+       
+        // const { data } = await axios.post('http://localhost:5000/api/admin/login', { email, password });
+
+        const { data } = await API.get('/admin/login', { email, password });
+
+
         
         if (data.success) {
-            // 💾 Storage madhe save kara
+            
             localStorage.setItem('adminInfo', JSON.stringify(data));
             
-            // 🔑 Context update kara
+            
             setAdmin(data); 
             
             toast.success('Admin Welcome Back! Redirecting...');
             
-            // 🏎️ Dashboard la pathva
+           
             setTimeout(() => {
                 navigate('/admin/dashboard');
             }, 1500);

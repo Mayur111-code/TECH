@@ -3,20 +3,20 @@ const router = express.Router();
 const { 
     createProject, 
     getProjects, 
-    updateProject, // 👈 Ha pan import kara
-    deleteProject  // 👈 Ha pan import kara
+    updateProject,
+    deleteProject  
 } = require('../controllers/projectController');
 const upload = require('../middleware/upload');
 const { adminProtect } = require('../middleware/auth');
 
-// 📍 Route: /api/projects
+
 router.route('/')
     .get(getProjects) 
     .post(adminProtect, upload.single('image'), createProject);
 
-// 📍 Route: /api/projects/:id
+
 router.route('/:id')
-    .put(adminProtect, upload.single('image'), updateProject) // Edit sathi
-    .delete(adminProtect, deleteProject); // Delete sathi
+    .put(adminProtect, upload.single('image'), updateProject) 
+    .delete(adminProtect, deleteProject);
 
 module.exports = router;

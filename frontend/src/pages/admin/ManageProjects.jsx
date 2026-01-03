@@ -3,6 +3,10 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { Plus, Trash2, Edit, X, Upload, ExternalLink } from 'lucide-react';
 
+
+
+import API from '../../api/api'
+
 const ManageProjects = () => {
     const [projects, setProjects] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -13,7 +17,7 @@ const ManageProjects = () => {
     });
 
     const fetchProjects = async () => {
-        const { data } = await axios.get('http://localhost:5000/api/projects');
+        const { data } = await API.get('/projects');
         setProjects(data.data);
     };
 
@@ -23,7 +27,7 @@ const ManageProjects = () => {
         e.preventDefault();
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
         
-        // 🚀 IMPORTANT: FormData vapraycha image sathi
+      
         const data = new FormData();
         data.append('title', formData.title);
         data.append('description', formData.description);
@@ -41,10 +45,10 @@ const ManageProjects = () => {
 
         try {
             if (editId) {
-                await axios.put(`http://localhost:5000/api/projects/${editId}`, data, config);
+                await API.put(`/projects/${editId}`, data, config);
                 toast.success("Project Updated!");
             } else {
-                await axios.post('http://localhost:5000/api/projects', data, config);
+                await API.post('/projects', data, config);
                 toast.success("Project Added!");
             }
             resetForm();
@@ -64,7 +68,7 @@ const ManageProjects = () => {
     const deleteProject = async (id) => {
         if (!window.confirm("Are you sure?")) return;
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-        await axios.delete(`http://localhost:5000/api/projects/${id}`, {
+        await API.delete(`/projects/${id}`, {
             headers: { Authorization: `Bearer ${adminInfo.token}` }
         });
         toast.success("Deleted!");

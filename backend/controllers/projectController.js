@@ -9,7 +9,6 @@ exports.createProject = async (req, res) => {
             description,
             projectLink,
             category,
-            // Safe Array conversion
             techStack: Array.isArray(techStack) ? techStack : techStack.split(',').map(s => s.trim()),
             image: req.file ? req.file.path : ''
         };
@@ -25,7 +24,6 @@ exports.createProject = async (req, res) => {
     }
 };
 
-// 👆 GET PROJECTS (No changes needed)
 exports.getProjects = async (req, res) => {
     try {
         const projects = await Project.find().sort('-createdAt');
@@ -35,7 +33,7 @@ exports.getProjects = async (req, res) => {
     }
 };
 
-// 👇 ADDED: UPDATE PROJECT (Garaj lagte)
+
 exports.updateProject = async (req, res) => {
     try {
         let project = await Project.findById(req.params.id);

@@ -4,6 +4,9 @@ import { useAuth } from '../../context/AuthContext';
 import { toast } from 'sonner';
 import { MessageSquare, Users, Bell, ArrowUpRight, Trash2 } from 'lucide-react';
 
+import API from '../../api/api';
+
+
 const AdminDashboard = () => {
     const [inquiries, setInquiries] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,10 +16,22 @@ const AdminDashboard = () => {
         const fetchDashboardData = async () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${admin.token}` } };
-                const { data } = await axios.get('http://localhost:5000/api/admin/dashboard-data', config);
-                // Inquiries fetch karnyacha logic
-                const inquiryRes = await axios.get('http://localhost:5000/api/inquiries', config);
+                // const { data } = await axios.get('http://localhost:5000/api/admin/dashboard-data', config);
+                
+
+                const { data } = await API.get('/admin/dashboard-data', config);
+
+
+
+                // const inquiryRes = await axios.get('http://localhost:5000/api/inquiries', config);
+                // setInquiries(inquiryRes.data.data);
+
+                const inquiryRes = await API.get('/inquiries', config);
                 setInquiries(inquiryRes.data.data);
+
+
+
+
             } catch (err) {
                 toast.error("Data load karnyath error aala");
             } finally {
@@ -27,15 +42,17 @@ const AdminDashboard = () => {
     }, [admin.token]);
 
     const deleteInquiry = async (id) => {
-        if(window.confirm("He inquiry delete karaychi ka?")) {
+        if(window.confirm("Delete inquiry?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/inquiries/${id}`, {
+                // await axios.delete(`http://localhost:5000/api/inquiries/${id}`
+                
+                await API.delete(`inquiries/${id}`, {
                     headers: { Authorization: `Bearer ${admin.token}` }
                 });
                 setInquiries(inquiries.filter(iq => iq._id !== id));
                 toast.success("Inquiry deleted!");
             } catch (err) {
-                toast.error("Delete fail jhale");
+                toast.error("Delete failed!");
             }
         }
     };
@@ -64,7 +81,7 @@ const AdminDashboard = () => {
                     <p className="text-3xl font-black text-slate-900">{inquiries.length}</p>
                 </div>
                 
-                {/* Apan ithe Blogs ani Projects che count nantar add karu shakto */}
+               
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm opacity-60">
                     <div className="p-3 bg-purple-500/10 text-purple-600 rounded-xl w-fit"><Users size={24}/></div>
                     <h3 className="text-slate-500 text-sm font-medium mt-4">Active Users</h3>
@@ -72,7 +89,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-            {/* Recent Inquiries Table */}
+           
             <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-50">
                     <h2 className="font-bold text-slate-800">Recent Client Inquiries</h2>
