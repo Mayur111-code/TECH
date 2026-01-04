@@ -3,11 +3,13 @@ const Inquiry = require('../models/Inquiry');
 
 exports.createInquiry = async (req, res) => {
     try {
-        const { subject, message } = req.body;
+        const { subject, message } = req.body; 
 
         const inquiry = await Inquiry.create({
             user: req.user._id, 
+            subject,  
             message
+           
         });
 
         res.status(201).json({ success: true, data: inquiry });
@@ -15,6 +17,7 @@ exports.createInquiry = async (req, res) => {
         res.status(400).json({ success: false, message: error.message });
     }
 };
+
 
 
 exports.getInquiries = async (req, res) => {
