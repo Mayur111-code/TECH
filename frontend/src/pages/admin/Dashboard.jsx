@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'sonner';
 import { MessageSquare, Users, Bell, ArrowUpRight, Trash2 } from 'lucide-react';
-
 import API from '../../api/api';
-
 
 const AdminDashboard = () => {
     const [inquiries, setInquiries] = useState([]);
@@ -16,22 +13,8 @@ const AdminDashboard = () => {
         const fetchDashboardData = async () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${admin.token}` } };
-                // const { data } = await axios.get('http://localhost:5000/api/admin/dashboard-data', config);
-                
-
-                const { data } = await API.get('/admin/dashboard-data', config);
-
-
-
-                // const inquiryRes = await axios.get('http://localhost:5000/api/inquiries', config);
-                // setInquiries(inquiryRes.data.data);
-
                 const inquiryRes = await API.get('/inquiries', config);
                 setInquiries(inquiryRes.data.data);
-
-
-
-
             } catch (err) {
                 toast.error("Data load karnyath error aala");
             } finally {
@@ -44,8 +27,6 @@ const AdminDashboard = () => {
     const deleteInquiry = async (id) => {
         if(window.confirm("Delete inquiry?")) {
             try {
-                // await axios.delete(`http://localhost:5000/api/inquiries/${id}`
-                
                 await API.delete(`inquiries/${id}`, {
                     headers: { Authorization: `Bearer ${admin.token}` }
                 });
@@ -60,18 +41,18 @@ const AdminDashboard = () => {
     if (loading) return <div className="h-screen flex items-center justify-center font-bold text-blue-600 animate-pulse">Loading Dashboard...</div>;
 
     return (
-        <div className="space-y-6">
-            {/* Top Bar */}
-            <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                <h1 className="text-xl font-bold text-slate-800">Admin Command Center</h1>
-                <div className="flex items-center gap-4">
-                    <div className="bg-blue-50 text-blue-600 p-2 rounded-lg"><Bell size={20}/></div>
-                    <span className="text-sm font-semibold text-slate-600">{admin.admin.name}</span>
+        <div className="p-4 md:p-6 space-y-6">
+            {/* Top Bar - Responsive Wrap */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                <h1 className="text-lg md:text-xl font-bold text-slate-800">Admin Command Center</h1>
+                <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                    <div className="bg-blue-50 text-blue-600 p-2 rounded-lg cursor-pointer"><Bell size={20}/></div>
+                    <span className="text-sm font-semibold text-slate-600 truncate max-w-[150px]">{admin.admin.name}</span>
                 </div>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Stats Grid - Already mobile-friendly via grid-cols-1 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                     <div className="flex justify-between items-start">
                         <div className="p-3 bg-blue-500/10 text-blue-600 rounded-xl"><MessageSquare size={24}/></div>
@@ -81,7 +62,6 @@ const AdminDashboard = () => {
                     <p className="text-3xl font-black text-slate-900">{inquiries.length}</p>
                 </div>
                 
-               
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm opacity-60">
                     <div className="p-3 bg-purple-500/10 text-purple-600 rounded-xl w-fit"><Users size={24}/></div>
                     <h3 className="text-slate-500 text-sm font-medium mt-4">Active Users</h3>
@@ -89,13 +69,15 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-           
+            {/* Inquiries Table Container */}
             <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-50">
                     <h2 className="font-bold text-slate-800">Recent Client Inquiries</h2>
                 </div>
+                
+                {/* Horizontal Scroll on small screens */}
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
+                    <table className="w-full text-left min-w-[600px]">
                         <thead className="bg-slate-50 text-slate-500 text-[10px] uppercase font-bold tracking-widest">
                             <tr>
                                 <th className="p-4">Client Details</th>
@@ -126,6 +108,9 @@ const AdminDashboard = () => {
                         </tbody>
                     </table>
                 </div>
+                {inquiries.length === 0 && (
+                    <div className="p-10 text-center text-slate-400">No inquiries found.</div>
+                )}
             </div>
         </div>
     );
