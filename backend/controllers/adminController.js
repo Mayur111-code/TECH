@@ -28,35 +28,35 @@ const bcrypt = require('bcryptjs');
 
 // adminController.js
 
-exports.adminRegister = async (req, res) => {
-    const { name, email, password } = req.body;
-    try {
-        const adminExists = await Admin.findOne({ email });
-        if (adminExists) {
-            return res.status(400).json({ success: false, message: "Admin already exists" });
-        }
+// exports.adminRegister = async (req, res) => {
+//     const { name, email, password } = req.body;
+//     try {
+//         const adminExists = await Admin.findOne({ email });
+//         if (adminExists) {
+//             return res.status(400).json({ success: false, message: "Admin already exists" });
+//         }
 
-        // 1. Password hash kara
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+//         // 1. Password hash kara
+//         const salt = await bcrypt.genSalt(10);
+//         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // 2. Database madhe hash password pathva
-        const admin = await Admin.create({
-            name,
-            email,
-            password: hashedPassword 
-        });
+//         // 2. Database madhe hash password pathva
+//         const admin = await Admin.create({
+//             name,
+//             email,
+//             password: hashedPassword 
+//         });
 
-        res.status(201).json({
-            success: true,
-            message: "Admin Registered Successfully",
-            // Password display karu naka
-            admin: { id: admin._id, name: admin.name, email: admin.email }
-        });
-    } catch (err) {
-        res.status(500).json({ success: false, message: "Server Error", error: err.message });
-    }
-};
+//         res.status(201).json({
+//             success: true,
+//             message: "Admin Registered Successfully",
+//             // Password display karu naka
+//             admin: { id: admin._id, name: admin.name, email: admin.email }
+//         });
+//     } catch (err) {
+//         res.status(500).json({ success: false, message: "Server Error", error: err.message });
+//     }
+// };
 
 
 

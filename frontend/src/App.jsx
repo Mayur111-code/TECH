@@ -25,11 +25,7 @@ import ManageProjects from './pages/admin/ManageProjects';
 import ManageBlogs from './pages/admin/ManageBlogs';
 import Footer from './components/layout/Footer';
 
-// 💡 Error yenar nahi mhanun temporary empty components (Jar banvle nastil tar)
-//const ManageProjects = () => <div className="p-10 font-bold">Manage Projects Coming Soon...</div>;
-//const ManageBlogs = () => <div className="p-10 font-bold">Manage Blogs Coming Soon...</div>;
 
-// 🛡️ Layout Manager: Navbar ani Sidebar manage karnyathi
 const LayoutHandler = ({ children }) => {
     const location = useLocation();
     const isAdminPath = location.pathname.startsWith('/admin');
@@ -37,10 +33,9 @@ const LayoutHandler = ({ children }) => {
 
     return (
         <div className={isAdminPath && !isLoginPage ? "flex" : ""}>
-            {/* User Navbar: Fakt Public pages var disnar */}
             {!isAdminPath && <Navbar />}
 
-            {/* Admin Sidebar: Fakt Admin pages var (Dashboard, Services etc.) disnar */}
+          
             {isAdminPath && !isLoginPage && <Sidebar />}
 
             <main className={!isAdminPath ? "pt-16 flex-1" : "flex-1"}>

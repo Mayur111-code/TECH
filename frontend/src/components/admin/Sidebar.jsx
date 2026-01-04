@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -10,10 +9,22 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false); // Mobile toggle state
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('adminInfo');
@@ -27,77 +38,89 @@ const Sidebar = () => {
     { name: 'Manage Blogs', path: '/admin/blogs', icon: <Newspaper size={20} /> },
   ];
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const sidebarContent = (
+    <>
+      {/* Brand Logo */}
+      <div className="p-4 md:p-6 mb-4 flex items-center justify-between md:block">
+        <h1 className="text-lg md:text-xl font-black text-white tracking-tighter italic">
+          INFINA<span className="text-blue-500">.</span>ADMIN
+        </h1>
+        {isMobile && (
+          <button 
+            onClick={() => setIsOpen(false)}
+            className="text-slate-300 hover:text-white md:hidden"
+          >
+            <X size={24} />
+          </button>
+        )}
+      </div>
+
+      {/* Navigation Links */}
+      <nav className="flex-1 px-2 md:px-4 space-y-1 md:space-y-2">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.name}
+            to={item.path}
+            onClick={() => isMobile && setIsOpen(false)}
+            className={({ isActive }) => 
+              `flex items-center justify-between p-3 rounded-lg md:rounded-xl transition-all group ${
+                isActive 
+                ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' 
+                : 'hover:bg-slate-800 hover:text-white'
+              }`
+            }
+          >
+            <div className="flex items-center gap-3">
+              {item.icon}
+              <span className="font-medium text-sm">{item.name}</span>
+            </div>
+            <ChevronRight size={14} className="hidden md:block opacity-0 group-hover:opacity-100 transition-opacity" />
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* Logout Button */}
+      <div className="p-4 border-t border-slate-800">
+        <button 
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full p-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all font-bold text-sm"
+        >
+          <LogOut size={20} />
+          <span>Logout</span>
+        </button>
+      </div>
+    </>
+  );
 
   return (
     <>
-      {/* Mobile Toggle Header */}
-      <div className="lg:hidden bg-slate-900 p-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 className="text-xl font-black text-white italic">
-          INFINA<span className="text-blue-500">.</span>ADMIN
-        </h1>
-        <button onClick={toggleSidebar} className="text-white p-2">
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+      {/* Mobile Menu Button */}
+      {isMobile && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg md:hidden"
+        >
+          <Menu size={24} />
         </button>
-      </div>
-
-      {/* Sidebar Overlay for Mobile */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
-          onClick={toggleSidebar}
-        />
       )}
 
-      {/* Main Sidebar */}
+      {/* Sidebar */}
       <div className={`
-        fixed lg:sticky top-0 left-0 z-40
+        ${isMobile ? 'fixed inset-y-0 left-0 z-40 transform' : 'sticky top-0'} 
+        ${isMobile && !isOpen ? '-translate-x-full' : 'translate-x-0'}
         w-64 bg-slate-900 h-screen flex flex-col text-slate-300 border-r border-slate-800
-        transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        transition-transform duration-300 ease-in-out md:translate-x-0 md:relative
       `}>
-        {/* Brand Logo (Hidden on mobile header if you want, or kept here) */}
-        <div className="p-6 mb-4 hidden lg:block">
-          <h1 className="text-xl font-black text-white tracking-tighter italic">
-            INFINA<span className="text-blue-500">.</span>ADMIN
-          </h1>
-        </div>
-
-        {/* Navigation Links */}
-        <nav className="flex-1 px-4 space-y-2 mt-4 lg:mt-0">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              onClick={() => setIsOpen(false)} // Close on click
-              className={({ isActive }) => 
-                `flex items-center justify-between p-3 rounded-xl transition-all group ${
-                  isActive 
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' 
-                  : 'hover:bg-slate-800 hover:text-white'
-                }`
-              }
-            >
-              <div className="flex items-center gap-3">
-                {item.icon}
-                <span className="font-medium text-sm">{item.name}</span>
-              </div>
-              <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Logout Button */}
-        <div className="p-4 border-t border-slate-800">
-          <button 
-            onClick={handleLogout}
-            className="flex items-center gap-3 w-full p-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all font-bold text-sm"
-          >
-            <LogOut size={20} />
-            <span>Logout</span>
-          </button>
-        </div>
+        {sidebarContent}
       </div>
+
+      {/* Overlay for mobile */}
+      {isMobile && isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </>
   );
 };
