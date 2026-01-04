@@ -35,37 +35,86 @@ const Contact = () => {
     });
     const [success, setSuccess] = useState(false);
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     if (!user) {
+    //         toast.error("Please login to send an inquiry!");
+    //         navigate('/login');
+    //         return;
+    //     }
+
+    //     setLoading(true);
+    //     try {
+    //         const config = {
+    //             headers: { Authorization: `Bearer ${user.token}` }
+    //         };
+
+    //         // const response = await axios.post('http://localhost:5000/api/inquiries', formData, config);
+
+    //          const response = await API.post('/inquiries', formData, config);
+
+    //         if (response.data.success) {
+    //             toast.success("Inquiry sent successfully!");
+    //             setFormData({ subject: '', message: '', category: 'general' });
+    //             setSuccess(true);
+    //             setTimeout(() => setSuccess(false), 5000);
+    //         }
+    //     } catch (error) {
+    //         toast.error(error.response?.data?.message || "Something went wrong. Please try again.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+
+
+
+
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (!user) {
-            toast.error("Please login to send an inquiry!");
-            navigate('/login');
-            return;
-        }
+    if (!user) {
+        toast.error("Please login to send an inquiry!");
+        navigate('/login');
+        return;
+    }
 
-        setLoading(true);
-        try {
-            const config = {
-                headers: { Authorization: `Bearer ${user.token}` }
-            };
-
-            // const response = await axios.post('http://localhost:5000/api/inquiries', formData, config);
-
-             const response = await API.post('/inquiries', formData, config);
-
-            if (response.data.success) {
-                toast.success("Inquiry sent successfully!");
-                setFormData({ subject: '', message: '', category: 'general' });
-                setSuccess(true);
-                setTimeout(() => setSuccess(false), 5000);
+    setLoading(true);
+    try {
+        const config = {
+            headers: { 
+                Authorization: `Bearer ${user.token}`,
+                'Content-Type': 'application/json' 
             }
-        } catch (error) {
-            toast.error(error.response?.data?.message || "Something went wrong. Please try again.");
-        } finally {
-            setLoading(false);
+        };
+
+        
+        const dataToSend = {
+            subject: formData.subject, 
+            message: formData.message,
+            category: formData.category 
+        };
+
+        const response = await API.post('/inquiries', dataToSend, config);
+
+        if (response.data.success) {
+            toast.success("Inquiry sent successfully!");
+            setFormData({ subject: '', message: '', category: 'general' });
+            setSuccess(true);
+            setTimeout(() => setSuccess(false), 5000);
         }
-    };
+    } catch (error) {
+        
+        console.error("Inquiry Error Details:", error.response?.data);
+        toast.error(error.response?.data?.message || "Something went wrong.");
+    } finally {
+        setLoading(false);
+    }
+};
+
+
 
     const categories = [
         { value: 'general', label: 'General Inquiry', icon: <MessageSquare className="w-4 h-4" /> },
