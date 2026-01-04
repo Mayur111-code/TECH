@@ -25,7 +25,7 @@ const AdminLogin = () => {
        
         // const { data } = await axios.post('http://localhost:5000/api/admin/login', { email, password });
 
-        const { data } = await API.get('/admin/login', { email, password });
+        const { data } = await API.post('/admin/login', { email, password });
 
 
         
