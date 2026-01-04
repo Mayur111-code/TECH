@@ -398,15 +398,29 @@ const Contact = () => {
                         Serving Clients Worldwide
                     </h3>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
-                        {['USA', 'UK', 'UAE', 'India'].map((country) => (
-                            <div key={country} className="p-6 bg-gray-900/30 backdrop-blur-sm rounded-2xl border border-gray-800/50 hover:border-emerald-500/30 transition-all">
-                                <div className="text-4xl mb-2">🌍</div>
-                                <div className="text-white font-bold">{country}</div>
-                                <div className="text-gray-400 text-sm">Remote Teams</div>
-                            </div>
-                        ))}
-                    </div>
+                   <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
+  {[
+    { country: 'India', code: 'in' },
+    { country: 'USA', code: 'us' },
+    { country: 'UK', code: 'gb' },
+    { country: 'Singapore', code: 'sg' },
+  ].map(({ country, code }) => (
+    <div
+      key={country}
+      className="p-6 bg-gray-900/30 backdrop-blur-sm rounded-2xl border border-gray-800/50 hover:border-emerald-500/30 transition-all"
+    >
+      <img
+        src={`https://flagcdn.com/w40/${code}.png`}
+        alt={country}
+        className="mb-2"
+      />
+      <div className="text-white font-bold">{country}</div>
+      <div className="text-gray-400 text-sm">Remote Teams</div>
+    </div>
+  ))}
+</div>
+
+
                 </div>
             </motion.section>
         </div>
