@@ -55,7 +55,7 @@ const Footer = () => {
 
   const contactInfo = [
     { icon: <MapPin className="w-4 h-4" />, text: 'Pune, Maharashtra, India', color: 'text-emerald-400' },
-    { icon: <Phone className="w-4 h-4" />, text: '+91 98765 43210', color: 'text-blue-400' },
+    { icon: <Phone className="w-4 h-4" />, text: '+91 7028507985', color: 'text-blue-400' },
     { icon: <Mail className="w-4 h-4" />, text: 'contact@infinatech.com', color: 'text-purple-400' },
     { icon: <Globe className="w-4 h-4" />, text: '24/7 Global Support', color: 'text-cyan-400' },
   ];
