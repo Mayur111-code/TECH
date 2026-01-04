@@ -8,7 +8,16 @@ module.exports = function (passport) {
                 clientID: process.env.GOOGLE_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
                
-callbackURL: 'https://tech-k27j.onrender.com/api/user/google/callback', 
+// callbackURL: 'https://tech-k27j.onrender.com/api/user/google/callback', 
+
+
+
+
+
+callbackURL: process.env.NODE_ENV === 'production' 
+    ? 'https://tech-k27j.onrender.com/api/user/google/callback' 
+    : 'http://localhost:5000/api/user/google/callback',
+
             },
             async (accessToken, refreshToken, profile, done) => {
                 const newUser = {
