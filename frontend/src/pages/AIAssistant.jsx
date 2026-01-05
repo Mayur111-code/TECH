@@ -22,49 +22,45 @@ const AIAssistant = () => {
         }
     }, [user, messages.length]);
 
-    // Auto-scroll logic
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, loading]);
 
     const handleSendMessage = async (e) => {
-        e.preventDefault();
-        if (!input.trim() || loading) return;
+    e.preventDefault();
+    if (!input.trim() || loading) return;
 
-        const userMsg = { role: 'user', content: input };
-        
-        // Gemini format madhe history prepare kara
-        const historyPayload = messages.map(msg => ({
+   
+    const historyPayload = messages
+        .filter((msg, index) => {
+            
+            if (index === 0 && msg.role === 'ai') return false;
+            return true;
+        })
+        .map(msg => ({
             role: msg.role === 'ai' ? 'model' : 'user',
             parts: [{ text: msg.content }]
         }));
 
-        setMessages(prev => [...prev, userMsg]);
-        setInput('');
-        setLoading(true);
+    setMessages(prev => [...prev, { role: 'user', content: input }]);
+    setInput('');
+    setLoading(true);
 
-        try {
-            const config = { 
-                headers: { Authorization: `Bearer ${user.token}` } 
-            };
-            
-            // Backend call with message and history
-            const { data } = await API.post('/ai/chat', { 
-                message: input, 
-                history: historyPayload 
-            }, config);
-            
-            if (data.success) {
-                setMessages(prev => [...prev, { role: 'ai', content: data.reply }]);
-            }
-        } catch (error) {
-            console.error("Chat Error:", error);
-            toast.error("AI is busy, please try again later.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
+    try {
+        const config = { headers: { Authorization: `Bearer ${user.token}` } };
+        const { data } = await API.post('/ai/chat', { 
+            message: input, 
+            history: historyPayload 
+        }, config);
+        
+        setMessages(prev => [...prev, { role: 'ai', content: data.reply }]);
+    } catch (error) {
+        console.error("Chat Error:", error);
+        toast.error("AI is busy.");
+    } finally {
+        setLoading(false);
+    }
+};
     if (!user) return null;
 
     return (

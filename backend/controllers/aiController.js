@@ -50,7 +50,10 @@ exports.chatWithAI = async (req, res) => {
 
 });
 
-
+let safeHistory = Array.isArray(history) ? history : [];
+        if (safeHistory.length > 0 && safeHistory[0].role === 'model') {
+            safeHistory = []; 
+        }
 
        
         const chat = model.startChat({

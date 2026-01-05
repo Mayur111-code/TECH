@@ -80,7 +80,7 @@ const Register = () => {
             if (data.success) {
                 localStorage.setItem('userInfo', JSON.stringify(data));
                 setUser(data);
-                toast.success('🎉 Welcome to INFINATECH! Your account has been created.');
+                toast.success('🎉 Welcome to INFINA TECH! Your account has been created.');
                 setTimeout(() => {
                     navigate('/');
                 }, 1500);
