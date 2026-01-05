@@ -447,7 +447,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   User, LogOut, Settings, ChevronDown, Menu, X, Home, Briefcase, 
-  FolderKanban, MessageSquare, Mail, Sparkles, Zap, Star, Layers, Shield 
+  FolderKanban, MessageSquare, Mail, Sparkles, Zap, Star, Layers, Shield, 
+  Airplay
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -505,6 +506,7 @@ const Navbar = () => {
     { name: 'Projects', path: '/projects', icon: <FolderKanban className="w-4 h-4" />, gradient: 'from-emerald-500 to-teal-500' },
     { name: 'Blogs', path: '/blogs', icon: <MessageSquare className="w-4 h-4" />, gradient: 'from-amber-500 to-orange-500' },
     { name: 'Contact', path: '/contact', icon: <Mail className="w-4 h-4" />, gradient: 'from-rose-500 to-red-500' },
+    // { name: 'Ai', path: '/ai', icon: <Airplay className="w-4 h-4" />, gradient: 'from-rose-500 to-red-500' }
   ];
 
   useEffect(() => {
