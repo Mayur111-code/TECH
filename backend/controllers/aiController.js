@@ -4,7 +4,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 exports.chatWithAI = async (req, res) => {
     try {
         const { message, history } = req.body; // Frontend kadun history gheu
-        const userName = req.user.name;
+       const userName = req.user ? req.user.name : "Member";
 
         const model = genAI.getGenerativeModel({ 
 

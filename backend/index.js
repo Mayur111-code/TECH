@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "https://infina-tech.vercel.app", 
+    origin: "https://infina-tech.vercel.app" || "http://localhost:5173", 
     credentials: true, 
   })
 );
