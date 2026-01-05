@@ -24,6 +24,7 @@ import LoginSuccess from './pages/user/LoginSuccess';
 import ManageProjects from './pages/admin/ManageProjects';
 import ManageBlogs from './pages/admin/ManageBlogs';
 import Footer from './components/layout/Footer';
+import AIAssistant from './pages/AIAssistant';
 
 
 const LayoutHandler = ({ children }) => {
@@ -41,8 +42,13 @@ const LayoutHandler = ({ children }) => {
             <main className={!isAdminPath ? "pt-16 flex-1" : "flex-1"}>
                 {children}
 
+
+                {!isAdminPath && <AIAssistant />}
+
                 {!isAdminPath && <Footer />}
+                
             </main>
+
         </div>
     );
 };

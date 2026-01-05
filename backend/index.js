@@ -53,6 +53,8 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/inquiries', require('./routes/inquiryRoutes'));
 app.use('/api/blogs', require('./routes/blogRoutes'));
 
+app.use('/api/chat', require('./routes/aiRoutes'))
+
 
 app.get('/', (req, res) => {
   res.send('Infina Tech API is running...');
