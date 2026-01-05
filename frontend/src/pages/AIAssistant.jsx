@@ -13,7 +13,7 @@ const AIAssistant = () => {
     const [loading, setLoading] = useState(false);
     const scrollRef = useRef(null);
 
-    // Initial Greeting
+
     useEffect(() => {
         if (user && messages.length === 0) {
             setMessages([
@@ -31,7 +31,6 @@ const AIAssistant = () => {
         const currentInput = input.trim();
         if (!currentInput || loading) return;
 
-        // 1. Setup AI Client
         const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ 
             model: "gemini-pro", // Stable Model
@@ -44,8 +43,7 @@ const AIAssistant = () => {
         setLoading(true);
 
         try {
-            // 3. Prepare History for Gemini (Skip initial AI greeting)
-            // Gemini needs: User -> Model -> User sequence
+            
             const history = messages
                 .filter((msg, index) => !(index === 0 && msg.role === 'ai'))
                 .map(msg => ({
