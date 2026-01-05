@@ -52,8 +52,7 @@ exports.chatWithAI = async (req, res) => {
 
 
 
-        // Chat chalu kara aani history pass kara
-        // Jar frontend kadun history aali nahi, tar empty array vapra
+       
         const chat = model.startChat({
             history: history || [
                 {
