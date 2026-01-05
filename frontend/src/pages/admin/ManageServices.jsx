@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'sonner';
 import { Plus, Trash2, Edit, Save, X, Search } from 'lucide-react';
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'sonner';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
@@ -20,8 +19,7 @@ const ManageBlogs = () => {
     // 1. Fetch Blogs from Backend
     const fetchBlogs = async () => {
         try {
-            // const { data } = await axios.get('http://localhost:5000/api/blogs');
-            // setBlogs(data.data);
+            
 
             const { data } = await API.get('/blogs');
              setBlogs(data.data);

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { 
@@ -26,8 +25,7 @@ const Projects = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                // const { data } = await axios.get('http://localhost:5000/api/projects');
-
+             
 
                 const { data } = await API.get('/projects');
 

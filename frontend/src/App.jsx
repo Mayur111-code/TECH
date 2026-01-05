@@ -24,7 +24,6 @@ import LoginSuccess from './pages/user/LoginSuccess';
 import ManageProjects from './pages/admin/ManageProjects';
 import ManageBlogs from './pages/admin/ManageBlogs';
 import Footer from './components/layout/Footer';
-import AIAssistant from './pages/AIAssistant';
 
 
 const LayoutHandler = ({ children }) => {
@@ -36,17 +35,16 @@ const LayoutHandler = ({ children }) => {
         <div className={isAdminPath && !isLoginPage ? "flex" : ""}>
             {!isAdminPath && <Navbar />}
 
-          
+
             {isAdminPath && !isLoginPage && <Sidebar />}
 
             <main className={!isAdminPath ? "pt-16 flex-1" : "flex-1"}>
                 {children}
 
 
-                {!isAdminPath && <AIAssistant />}
 
                 {!isAdminPath && <Footer />}
-                
+
             </main>
 
         </div>
@@ -58,15 +56,15 @@ function App() {
         <AuthProvider>
             <BrowserRouter>
                 <Toaster position="top-right" richColors />
-                
+
                 <LayoutHandler>
                     <Routes>
                         {/* --- PUBLIC ROUTES --- */}
                         <Route path="/" element={<Home />} />
                         <Route path="/services" element={<Services />} />
-                        <Route path="/projects" element={<Projects/>}/>
-                        <Route path='/blogs' element={<Blogs/>}/>
-                        <Route path='/contact' element={<Contact/>}/>
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path='/blogs' element={<Blogs />} />
+                        <Route path='/contact' element={<Contact />} />
                         <Route path="/login-success" element={<LoginSuccess />} />
 
                         {/* --- USER AUTH --- */}
@@ -75,12 +73,12 @@ function App() {
 
                         {/* --- ADMIN AUTH --- */}
                         <Route path="/admin/login" element={<AdminLogin />} />
-                        
+
                         {/* --- PROTECTED ADMIN ROUTES --- */}
                         <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
                         <Route path="/admin/services" element={<AdminRoute><ManageServices /></AdminRoute>} />
                         <Route path="/admin/projects" element={<AdminRoute><ManageProjects /></AdminRoute>} />
-                       <Route path="/admin/blogs" element={<AdminRoute><ManageBlogs /></AdminRoute>} />
+                        <Route path="/admin/blogs" element={<AdminRoute><ManageBlogs /></AdminRoute>} />
                     </Routes>
                 </LayoutHandler>
             </BrowserRouter>

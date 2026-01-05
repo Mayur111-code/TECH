@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
@@ -29,12 +28,9 @@ const Blogs = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                // const { data } = await axios.get('http://localhost:5000/api/blogs');
-
 
                 const { data } = await API.get('/blogs');
 
-                
                 if (data.success) setBlogs(data.data);
             } catch (error) {
                 console.error('Error fetching blogs:', error);

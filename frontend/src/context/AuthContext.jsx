@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check if user or admin is logged in from localStorage
+        
         const savedUser = localStorage.getItem('userInfo');
         const savedAdmin = localStorage.getItem('adminInfo');
 

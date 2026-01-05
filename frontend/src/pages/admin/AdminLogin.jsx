@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; 
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
@@ -23,7 +22,6 @@ const AdminLogin = () => {
     
     try {
        
-        // const { data } = await axios.post('http://localhost:5000/api/admin/login', { email, password });
 
         const { data } = await API.post('/admin/login', { email, password });
 

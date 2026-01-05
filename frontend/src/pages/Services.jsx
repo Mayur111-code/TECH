@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import * as LucideIcons from 'lucide-react';
@@ -22,7 +21,7 @@ const Services = () => {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                // const { data } = await axios.get('http://localhost:5000/api/services');
+               
 
                 const { data } = await API.get('/services');
 
